@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "491503134772",
+    "firebase_url": "https://healthco-9352d.firebaseio.com",
+    "project_id": "healthco-9352d",
+    "storage_bucket": "healthco-9352d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491503134772:android:410a75ebc83fd823",
+        "android_client_info": {
+          "package_name": "com.hc.healthco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "491503134772-rvjfuhs5s2jdcmg7ad095s2s81arhi4e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBecD0eMaxOxzt_DZLGyy8gwhVufhXzbzo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
