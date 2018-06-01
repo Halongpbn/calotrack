@@ -8,13 +8,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="255dp"
-        tools:layout_editor_absoluteY="360dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="900dp">
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/add_header"
@@ -27,33 +27,30 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:title="Add"></android.support.v7.widget.Toolbar>
 
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="Step 1: Select date"
+                android:textSize="25dp"
+                android:textColor="#000000"
+                android:textAlignment="center"/>
+
             <CalendarView
                 android:id="@+id/calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/add_header"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/survey_activity_toolbar"
-                android:layout_alignParentLeft="true" />
+                app:layout_constraintTop_toBottomOf="@+id/survey_activity_toolbar" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/adding"
-                android:layout_width="89dp"
-                android:layout_height="72dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="17dp"
-                android:layout_marginStart="17dp"
-                android:clickable="true"
-                app:backgroundTint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_add_black_24dp"
-                tools:layout_editor_absoluteX="48dp"
-                tools:layout_editor_absoluteY="450dp" />
-
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 
 
