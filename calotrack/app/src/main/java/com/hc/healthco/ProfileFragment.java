@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.hc.healthco.AccountActivity.LoginActivity;
 import com.hc.healthco.R;
 
 public class ProfileFragment extends Fragment {
@@ -32,7 +33,7 @@ public class ProfileFragment extends Fragment {
                 context = getActivity();
                 firebaseAuth.signOut();
                 context.finish();
-                startActivity(new Intent(context, MainActivity.class));
+                startActivity(new Intent(context, LoginActivity.class));
             }
         });
         return view;
