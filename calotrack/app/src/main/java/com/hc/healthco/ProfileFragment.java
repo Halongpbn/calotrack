@@ -23,18 +23,18 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        context = getActivity();
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
         firebaseAuth = FirebaseAuth.getInstance();
-        logout = (Button) context.findViewById(R.id.logout_button);
-
+        logout = (Button) view.findViewById(R.id.logout_button);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                context = getActivity();
                 firebaseAuth.signOut();
                 context.finish();
                 startActivity(new Intent(context, MainActivity.class));
             }
         });
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return view;
     }
 }
