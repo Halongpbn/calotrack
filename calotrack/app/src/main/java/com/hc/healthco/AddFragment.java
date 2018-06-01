@@ -1,5 +1,6 @@
 package com.hc.healthco;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,19 +21,17 @@ public class AddFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_add, container, false);
-    }
-    @Override
-    public void onViewCreated()
-    {
-        super.onCreate(savedInstances);
-        FragmentActivity context = getActivity();
-        add = (FloatingActionButton) context.findViewById(R.id.adding);
+        View view = inflater.inflate(R.layout.fragment_add, container, false);
+        add = (FloatingActionButton) view.findViewById(R.id.adding);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Activity context = getActivity();
+                startActivity(new Intent(context, HomeFragment.class));
             }
         });
+        return view;
     }
+
+
 }
