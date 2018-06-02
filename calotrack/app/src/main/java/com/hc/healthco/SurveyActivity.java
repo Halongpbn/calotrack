@@ -1,6 +1,7 @@
 package com.hc.healthco;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +25,9 @@ public class SurveyActivity extends AppCompatActivity {
     private Button submitButton;
     private RadioGroup gender, activity;
     private FirebaseAuth firebaseAuth;
-
+    private FirebaseDatabase database;
+    private DatabaseReference ref;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +71,16 @@ public class SurveyActivity extends AppCompatActivity {
         else
             bmr = cmHeight * 6.25 + kg * 9.9 - age * 4.92 - 161;
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("BMR");
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference("User");
+        user = new User();
+        user.setBMR(bmr);
+        ref.child("User1").setValue(user);
 
-        myRef.setValue("bmr");
 
+    }
+    private void addUser(double bmr)
+    {
 
     }
 }

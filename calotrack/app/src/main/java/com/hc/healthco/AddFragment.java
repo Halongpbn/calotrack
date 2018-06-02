@@ -12,26 +12,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 
 import com.hc.healthco.AccountActivity.LoginActivity;
 import com.hc.healthco.R;
 
 public class AddFragment extends Fragment {
     private FloatingActionButton add;
+    private CalendarView calendar;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
-        add = (FloatingActionButton) view.findViewById(R.id.adding);
-        add.setOnClickListener(new View.OnClickListener() {
+        calendar = (CalendarView) view.findViewById(R.id.calendar);
+        calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Activity context = getActivity();
-                startActivity(new Intent(context, HomeFragment.class));
+
             }
         });
+        long date = calendar.getDate();
+        calendar.setDate(date, true, true);
         return view;
     }
+
 
 
 }
