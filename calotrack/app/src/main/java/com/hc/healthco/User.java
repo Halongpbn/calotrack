@@ -1,15 +1,13 @@
 package com.hc.healthco;
 
 public class User {
-    private double bmr;
-    private String id;
+    double bmr;
 
     public User()
     {}
-    public User(String id, double bmr)
+    public User(double bmr)
     {
         this.bmr = bmr;
-        this.id = id;
 
     }
     public double returnBMR()
@@ -20,12 +18,5 @@ public class User {
     {
         bmr = num;
     }
-    public String returnId()
-    {
-        return id;
-    }
-    public void setId(String word)
-    {
-        id = word;
-    }
+
 }

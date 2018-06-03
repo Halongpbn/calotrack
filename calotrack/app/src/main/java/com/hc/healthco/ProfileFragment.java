@@ -39,8 +39,7 @@ public class ProfileFragment extends Fragment {
         bmr = (TextView) view.findViewById(R.id.bmr_text);
         ref = FirebaseDatabase.getInstance().getReference("users");
         update = (Button) view.findViewById(R.id.updateBMR);
-        String id = ref.push().getKey();
-        bmr.setText(ref.child(id).getValue());
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,8 +58,21 @@ public class ProfileFragment extends Fragment {
         });
         return view;
     }
-    private void updateBMR()
-    {
 
+    public void onStart() {
+        super.onStart();
+        String id = ref.push().getKey();
+        ref.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //double value = dataSnapshot.getValue(double.class);
+                //bmr.setText("BMR " + value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

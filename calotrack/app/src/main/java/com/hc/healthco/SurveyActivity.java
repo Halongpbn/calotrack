@@ -8,18 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.hc.healthco.AccountActivity.LoginActivity;
-import com.hc.healthco.AccountActivity.SignUpActivity;
 
 public class SurveyActivity extends AppCompatActivity {
     private Button submitButton;
@@ -34,6 +30,7 @@ public class SurveyActivity extends AppCompatActivity {
 
         submitButton = findViewById(R.id.submit_button);
         firebaseAuth = FirebaseAuth.getInstance();
+        ref = FirebaseDatabase.getInstance().getReference("users");
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,11 +42,10 @@ public class SurveyActivity extends AppCompatActivity {
     private void addUser()
     {
         double bmr = calcBMR();
-        ref = FirebaseDatabase.getInstance().getReference("users");
+        User person = new User(bmr);
+        person.setBMR(bmr);
         String id = ref.push().getKey();
-        User user = new User(id, bmr);
-        DatabaseReference childRef = ref.child(id);
-        childRef.setValue(bmr);
+        ref.child(id).setValue(bmr);
     }
 
 
