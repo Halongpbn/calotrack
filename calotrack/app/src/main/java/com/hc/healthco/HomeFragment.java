@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
         xAxis.add("August");
         xAxis.add("September");
 
-        LimitLine limit = new LimitLine(150f, "Upper Limit");
+        LimitLine limit = new LimitLine(1000f, "Calorie Limit");
         limit.setLineWidth(4f);
         limit.enableDashedLine(10f, 10f, 0f);
         limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
@@ -58,7 +58,6 @@ public class HomeFragment extends Fragment {
 
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
-        lineChart.(limit);
 
 
         return view;
