@@ -89,32 +89,48 @@
                 android:layout_height="wrap_content"
                 android:hint="Weight (in lbs)"
                 android:inputType="text" />
+
         </android.support.design.widget.TextInputLayout>
-         <TextView
-            android:id="@+id/textView2"
+
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This info will be used to calculate your Basic Metabolic Rate (BMR). This helps us understand how many calories you need to burn. These calculations are only an approximation though, so try to get your actual BMR from a doctor! " />
+            android:layout_weight="1"
+            android:text="Activity Level:" />
 
         <RadioGroup
-            android:id="@+id/sex"
+            android:id="@+id/activity"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
             <RadioButton
-                android:id="@+id/rad_female"
+                android:id="@+id/sedentary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Female" />
+                android:text="Sedentary (little/no exercise)" />
 
             <RadioButton
-                android:id="@+id/rad_male"
+                android:id="@+id/light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Male" />
+                android:text="Lightly active (1-3 days/week)" />
+
+            <RadioButton
+                android:id="@+id/moderate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Moderately active (3-5 days/week)" />
+
+            <RadioButton
+                android:id="@+id/intense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Very active (6-7 days/week)" />
         </RadioGroup>
 
         <Button
