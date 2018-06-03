@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hc.healthco.R;
+import com.github.mikephil.charting.components.YAxis;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -33,12 +34,13 @@ public class HomeFragment extends Fragment {
         lineChart = (LineChart) view.findViewById(R.id.chart);
         ArrayList <Entry> yAxis = new ArrayList<>();
         for(int i = 0; i < 30;i++) {
-            float val = (float) Math.random()*100;
+            float val = (float) Math.random()*1500;
             yAxis.add(new Entry(i, val));
         }
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(false);
-        LineDataSet lineData = new LineDataSet(yAxis, "DataSet1");
+        lineChart.getDescription().setEnabled(false);
+        LineDataSet lineData = new LineDataSet(yAxis, "Calorie Intake");
         ArrayList <ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineData);
 
@@ -50,17 +52,25 @@ public class HomeFragment extends Fragment {
         xAxis.add("August");
         xAxis.add("September");
 
-        LimitLine limit = new LimitLine(1000f, "Calorie Limit");
-        limit.setLineWidth(4f);
-        limit.enableDashedLine(10f, 10f, 0f);
+        LimitLine limit = new LimitLine(1000f, "Calories Needed");
+        limit.setLineWidth(2f);
         limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
         limit.setTextSize(10f);
+        YAxis leftAxis = lineChart.getAxisLeft();
+        leftAxis.removeAllLimitLines();
+        leftAxis.addLimitLine(limit);
+        leftAxis.enableGridDashedLine(10f, 10f, 0f);
+        lineChart.getAxisRight().setEnabled(false);
 
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
 
 
         return view;
+
+    }
+
+    private void setData() {
 
     }
 }
