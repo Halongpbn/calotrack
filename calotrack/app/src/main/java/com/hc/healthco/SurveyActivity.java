@@ -56,7 +56,7 @@ public class SurveyActivity extends AppCompatActivity {
         double weight = Double.parseDouble(tilWeight.getEditText().getText().toString());
 
         String feet = height.substring(0, height.indexOf("_"));
-        String inches = height.substring(height.indexOf("_") + 1, height.indexOf(height.length() - 1));
+        String inches = height.substring(height.indexOf("_") + 1, height.length());
         double cmHeight = 2.54 * (Integer.parseInt(feet) + Double.parseDouble(inches) / 12);
         double kg = weight * 0.453592;
         double bmr;
