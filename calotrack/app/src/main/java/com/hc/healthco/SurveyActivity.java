@@ -41,7 +41,7 @@ public class SurveyActivity extends AppCompatActivity {
     }
     private void addUser()
     {
-        double bmr = calcBMR();
+        double bmr = calcCalos();
         User person = new User(bmr);
         person.setBMR(bmr);
         String id = ref.push().getKey();
@@ -49,7 +49,7 @@ public class SurveyActivity extends AppCompatActivity {
     }
 
 
-    private double calcBMR() {
+    private double calcCalos() {
 
         TextInputLayout tilAge = (TextInputLayout) findViewById(R.id.age);
         int age = Integer.parseInt(tilAge.getEditText().getText().toString());
@@ -74,7 +74,24 @@ public class SurveyActivity extends AppCompatActivity {
         else
             bmr = cmHeight * 6.25 + kg * 9.9 - age * 4.92 - 161;
 
-        return bmr;
+        RadioGroup radioGroup2 = (RadioGroup) findViewById(R.id.activity);
+        int radioButtonID2 = radioGroup.getCheckedRadioButtonId();
+        RadioButton radioButton2 = (RadioButton) radioGroup.findViewById(radioButtonID);
+        String activityLevel = (String) radioButton2.getText();
+        double calories;
+
+        if(activityLevel.equals("Sedentary (little/no exercise)"))
+            calories = bmr * 1.1;
+        else if(activityLevel.equals("Lightly active (1-3 days/week)"))
+            calories = bmr * 1.275;
+        else if(activityLevel.equals("Moderately active (3-5 days/week)"))
+            calories = bmr * 1.35;
+        else
+            calories = bmr * 1.525;
+
+        return calories;
+
+
 
 
 
