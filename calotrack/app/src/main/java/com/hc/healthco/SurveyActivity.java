@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,13 +22,10 @@ import com.hc.healthco.AccountActivity.LoginActivity;
 import com.hc.healthco.AccountActivity.SignUpActivity;
 
 public class SurveyActivity extends AppCompatActivity {
-    //private String age, height, weight;
     private Button submitButton;
-    private RadioGroup gender, activity;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private DatabaseReference ref;
-    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +37,22 @@ public class SurveyActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                calcBMR();
+                double bmr = calcBMR();
+                ref = FirebaseDatabase.getInstance().getReference("Users");
+                String id = ref.push().getKey();
+                User user = new User(id, bmr);
+                ref.child(id).setValue(user);
                 startActivity(new Intent(SurveyActivity.this, MainActivity.class));
             }
         });
     }
+    private void addUser()
+    {
+
+    }
 
 
-    private void calcBMR() {
+    private double calcBMR() {
 
         TextInputLayout tilAge = (TextInputLayout) findViewById(R.id.age);
         int age = Integer.parseInt(tilAge.getEditText().getText().toString());
@@ -71,16 +77,11 @@ public class SurveyActivity extends AppCompatActivity {
         else
             bmr = cmHeight * 6.25 + kg * 9.9 - age * 4.92 - 161;
 
-        database = FirebaseDatabase.getInstance();
-        ref = database.getReference("User");
-        user = new User();
-        user.setBMR(bmr);
-        ref.child("User1").setValue(user);
+        return bmr;
+
+
 
 
     }
-    private void addUser(double bmr)
-    {
 
-    }
 }
