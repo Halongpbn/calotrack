@@ -90,6 +90,32 @@
                 android:hint="Weight (in lbs)"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
+         <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="This info will be used to calculate your Basic Metabolic Rate (BMR). This helps us understand how many calories you need to burn. These calculations are only an approximation though, so try to get your actual BMR from a doctor! " />
+
+        <RadioGroup
+            android:id="@+id/sex"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rad_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Female" />
+
+            <RadioButton
+                android:id="@+id/rad_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Male" />
+        </RadioGroup>
 
         <Button
             android:id="@+id/submit_button"
