@@ -25,30 +25,31 @@ public class SurveyActivity extends AppCompatActivity {
     private Button submitButton;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
-    private DatabaseReference ref;
+    DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
+
         submitButton = findViewById(R.id.submit_button);
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double bmr = calcBMR();
-                ref = FirebaseDatabase.getInstance().getReference("Users");
-                String id = ref.push().getKey();
-                User user = new User(id, bmr);
-                ref.child(id).setValue(user);
+                addUser();
                 startActivity(new Intent(SurveyActivity.this, MainActivity.class));
             }
         });
     }
     private void addUser()
     {
-
+        double bmr = calcBMR();
+        ref = FirebaseDatabase.getInstance().getReference("users");
+        String id = ref.push().getKey();
+        User user = new User(id, bmr);
+        DatabaseReference childRef = ref.child(id);
+        childRef.setValue(bmr);
     }
 
 
