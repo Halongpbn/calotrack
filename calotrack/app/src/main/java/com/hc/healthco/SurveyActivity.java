@@ -64,7 +64,7 @@ public class SurveyActivity extends AppCompatActivity {
 
         String feet = height.substring(0, height.indexOf("_"));
         String inches = height.substring(height.indexOf("_") + 1, height.length());
-        double cmHeight = 2.54 * (Integer.parseInt(feet) + Double.parseDouble(inches) / 12);
+        double cmHeight = 2.54 * (Integer.parseInt(feet) * 12 + Integer.parseInt(inches));
         double kg = weight * 0.453592;
         double bmr;
 
