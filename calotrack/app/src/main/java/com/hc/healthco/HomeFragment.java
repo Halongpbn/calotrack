@@ -19,38 +19,65 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hc.healthco.R;
 import com.github.mikephil.charting.components.YAxis;
+import com.google.firebase.database.ChildEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
-    LineChart lineChart;
+    private LineChart lineChart;
+    private DatabaseReference ref;
+    private ArrayList <Entry> yAxis;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         lineChart = (LineChart) view.findViewById(R.id.chart);
-        ArrayList <Entry> yAxis = new ArrayList<>();
-        for(int i = 0; i < 30;i++) {
-            float val = (float) Math.random()*1500;
-            yAxis.add(new Entry(i, val));
-        }
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(false);
         lineChart.getDescription().setEnabled(false);
+        yAxis = new ArrayList<>();
         LineDataSet lineData = new LineDataSet(yAxis, "Calorie Intake");
         ArrayList <ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineData);
 
-        ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("April");
-        xAxis.add("May");
-        xAxis.add("June");
-        xAxis.add("July");
-        xAxis.add("August");
-        xAxis.add("September");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                yAxis = new ArrayList<>();
+
+                for(int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
+                        calPoint point = new calPoint();
+                        point.setDay(dataSnapshot.child(i + "").getValue(calPoint.class).getDay());
+                        point.setNumCal(dataSnapshot.child(i + "").getValue(calPoint.class).getNumCal());
+                        yAxis.add(new Entry(point.getDay(), (float) point.getNumCal()));
+                    }
+
+                LineDataSet lineData = new LineDataSet(yAxis, "Calorie Intake");
+                ArrayList <ILineDataSet> dataSets = new ArrayList<>();
+                dataSets.add(lineData);
+                LineData data = new LineData(dataSets);
+                lineChart.setData(data);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+
+        ref = FirebaseDatabase.getInstance().getReference("data");
+        ref.addValueEventListener(valueEventListener);
 
         LimitLine limit = new LimitLine(1000f, "Calories Needed");
         limit.setLineWidth(2f);
@@ -65,12 +92,10 @@ public class HomeFragment extends Fragment {
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
 
-
         return view;
 
     }
 
-    private void setData() {
 
-    }
 }
+
