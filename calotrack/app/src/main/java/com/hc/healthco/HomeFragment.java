@@ -29,6 +29,8 @@ public class HomeFragment extends Fragment {
     private LineChart lineChart;
     private DatabaseReference ref;
     private ArrayList <Entry> yAxis;
+    private User user;
+    private float num;
 
 
     @Nullable
@@ -39,19 +41,27 @@ public class HomeFragment extends Fragment {
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(false);
         lineChart.getDescription().setEnabled(false);
+        ref = FirebaseDatabase.getInstance().getReference("data");
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                yAxis = new ArrayList<>();
+                if (dataSnapshot.hasChildren()) {
+                    yAxis = new ArrayList<>();
 
-                for(int i = 0; i < dataSnapshot.getChildrenCount() ; i++) {
+                    for (int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
                         calPoint point = new calPoint();
                         point.setDay(dataSnapshot.child(i + "").getValue(calPoint.class).getDay());
                         point.setNumCal(dataSnapshot.child(i + "").getValue(calPoint.class).getNumCal());
                         yAxis.add(new Entry(point.getDay(), (float) point.getNumCal()));
 
                     }
+                }
+                String id = ref.push().getKey();
+                user = new User();
+                if(dataSnapshot.hasChild(id)) {
+                    user.setBMR(dataSnapshot.child(id).getValue(User.class).returnBMR());
+                }
                 setGraph();
             }
 
@@ -62,7 +72,6 @@ public class HomeFragment extends Fragment {
         };
 
 
-        ref = FirebaseDatabase.getInstance().getReference("data");
         ref.addValueEventListener(valueEventListener);
 
         return view;
@@ -75,7 +84,9 @@ public class HomeFragment extends Fragment {
         dataSets.add(lineData);
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
-        LimitLine limit = new LimitLine(1000f, "Calories Needed");
+        LimitLine limit;
+        limit = new LimitLine( num, "Calories Needed");
+        limit = new LimitLine(2000f, "Calories Needed");
         limit.setLineWidth(2f);
         limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
         limit.setTextSize(10f);

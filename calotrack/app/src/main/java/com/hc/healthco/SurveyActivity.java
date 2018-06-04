@@ -1,8 +1,6 @@
 package com.hc.healthco;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +11,6 @@ import android.widget.RadioGroup;
 
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -45,7 +42,7 @@ public class SurveyActivity extends AppCompatActivity {
         User person = new User(bmr);
         person.setBMR(bmr);
         String id = ref.push().getKey();
-        ref.child(id).setValue(bmr);
+        ref.child(id).setValue(person);
     }
 
 

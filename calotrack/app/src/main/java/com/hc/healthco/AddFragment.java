@@ -1,12 +1,9 @@
 package com.hc.healthco;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +12,8 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.hc.healthco.AccountActivity.LoginActivity;
-import com.hc.healthco.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +37,7 @@ public class AddFragment extends Fragment {
         calories = (EditText) view.findViewById(R.id.calories);
         add = (Button) view.findViewById(R.id.addCal);
         time = (TextView) view.findViewById(R.id.date);
-        ref = FirebaseDatabase.getInstance().getReference("data");
+        ref = FirebaseDatabase.getInstance().getReference();
         String date = 6 + "/" + 4 + "/" + 2018;
         day = 4;
         time.setText(date);
@@ -72,16 +64,15 @@ public class AddFragment extends Fragment {
     public void addPoint()
     {
         final double point = Double.parseDouble(calories.getText().toString());
-        String key = ref.push().getKey();
+        //String key = ref.push().getKey();
         calPoint calorie = new calPoint(point, day);
-        DatabaseReference pushedKey = ref.push();
+        //DatabaseReference pushedKey = ref.push();
         points.add(calorie);
-        ref.setValue(points);
+        //ref.setValue(points);
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("data", points);
 
-
+        ref.updateChildren(updates);
     }
-
-
-
 
 }
