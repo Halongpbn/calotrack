@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 yAxis = new ArrayList<>();
 
-                for(int i = 1; i <= dataSnapshot.getChildrenCount() ; i++) {
+                for(int i = 0; i < dataSnapshot.getChildrenCount() ; i++) {
                         calPoint point = new calPoint();
                         point.setDay(dataSnapshot.child(i + "").getValue(calPoint.class).getDay());
                         point.setNumCal(dataSnapshot.child(i + "").getValue(calPoint.class).getNumCal());
@@ -53,7 +53,6 @@ public class HomeFragment extends Fragment {
 
                     }
                 setGraph();
-
             }
 
             @Override
@@ -66,16 +65,6 @@ public class HomeFragment extends Fragment {
         ref = FirebaseDatabase.getInstance().getReference("data");
         ref.addValueEventListener(valueEventListener);
 
-        LimitLine limit = new LimitLine(1000f, "Calories Needed");
-        limit.setLineWidth(2f);
-        limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
-        limit.setTextSize(10f);
-        YAxis leftAxis = lineChart.getAxisLeft();
-        leftAxis.removeAllLimitLines();
-        leftAxis.addLimitLine(limit);
-        leftAxis.enableGridDashedLine(10f, 10f, 0f);
-        lineChart.getAxisRight().setEnabled(false);
-
         return view;
 
     }
@@ -86,6 +75,15 @@ public class HomeFragment extends Fragment {
         dataSets.add(lineData);
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
+        LimitLine limit = new LimitLine(1000f, "Calories Needed");
+        limit.setLineWidth(2f);
+        limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+        limit.setTextSize(10f);
+        YAxis leftAxis = lineChart.getAxisLeft();
+        leftAxis.removeAllLimitLines();
+        leftAxis.addLimitLine(limit);
+        leftAxis.enableGridDashedLine(10f, 10f, 0f);
+        lineChart.getAxisRight().setEnabled(false);
     }
 
 
