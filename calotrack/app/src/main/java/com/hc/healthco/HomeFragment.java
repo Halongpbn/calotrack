@@ -5,37 +5,31 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.mikephil.charting.charts.BarChart;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LimitLine;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hc.healthco.R;
 import com.github.mikephil.charting.components.YAxis;
-import com.google.firebase.database.ChildEventListener;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
     private LineChart lineChart;
     private DatabaseReference ref;
     private ArrayList <Entry> yAxis;
+
 
     @Nullable
     @Override
@@ -45,36 +39,29 @@ public class HomeFragment extends Fragment {
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(false);
         lineChart.getDescription().setEnabled(false);
-        yAxis = new ArrayList<>();
-        LineDataSet lineData = new LineDataSet(yAxis, "Calorie Intake");
-        ArrayList <ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(lineData);
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 yAxis = new ArrayList<>();
 
-                for(int i = 0; i < dataSnapshot.getChildrenCount(); i++) {
+                for(int i = 1; i <= dataSnapshot.getChildrenCount() ; i++) {
                         calPoint point = new calPoint();
                         point.setDay(dataSnapshot.child(i + "").getValue(calPoint.class).getDay());
                         point.setNumCal(dataSnapshot.child(i + "").getValue(calPoint.class).getNumCal());
                         yAxis.add(new Entry(point.getDay(), (float) point.getNumCal()));
-                    }
 
-                LineDataSet lineData = new LineDataSet(yAxis, "Calorie Intake");
-                ArrayList <ILineDataSet> dataSets = new ArrayList<>();
-                dataSets.add(lineData);
-                LineData data = new LineData(dataSets);
-                lineChart.setData(data);
+                    }
+                setGraph();
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.e("DEBUG", "Failure");
             }
         };
+
 
         ref = FirebaseDatabase.getInstance().getReference("data");
         ref.addValueEventListener(valueEventListener);
@@ -89,11 +76,16 @@ public class HomeFragment extends Fragment {
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         lineChart.getAxisRight().setEnabled(false);
 
-        LineData data = new LineData(dataSets);
-        lineChart.setData(data);
-
         return view;
 
+    }
+    public void setGraph()
+    {
+        LineDataSet lineData = new LineDataSet(yAxis, "Calorie Intake");
+        ArrayList <ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(lineData);
+        LineData data = new LineData(dataSets);
+        lineChart.setData(data);
     }
 
 

@@ -46,6 +46,9 @@ public class AddFragment extends Fragment {
         add = (Button) view.findViewById(R.id.addCal);
         time = (TextView) view.findViewById(R.id.date);
         ref = FirebaseDatabase.getInstance().getReference("data");
+        String date = 6 + "/" + 4 + "/" + 2018;
+        day = 4;
+        time.setText(date);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,8 +65,8 @@ public class AddFragment extends Fragment {
 
             }
         });
-        long date = calendar.getDate();
-        calendar.setDate(date, true, true);
+        long dateSet = calendar.getDate();
+        calendar.setDate(dateSet, true, true);
         return view;
     }
     public void addPoint()
